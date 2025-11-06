@@ -1,4 +1,4 @@
 LABEL default
   kernel /boot/Image
   devicetreedir /boot
-  append root=PARTUUID=%PARTUUID% rootwait
+  append root=PARTUUID=%PARTUUID% rootwait rw console=ttyS2,1500000 earlyprintk
