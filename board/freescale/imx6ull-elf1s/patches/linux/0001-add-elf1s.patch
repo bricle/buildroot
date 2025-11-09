@@ -1,7 +1,7 @@
 From fd4593cd06182e4609544318f4297774e4072db6 Mon Sep 17 00:00:00 2001
 From: Shan Pen <bricle031@gmail.com>
 Date: Fri, 7 Nov 2025 20:18:42 +0800
-Subject: [PATCH] add elf1s
+Subject: [PATCH 1/4] add elf1s
 
 ---
  arch/arm/boot/dts/nxp/imx/Makefile            |   1 +

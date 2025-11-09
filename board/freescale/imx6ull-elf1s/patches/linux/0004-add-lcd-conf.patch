@@ -1,0 +1,32 @@
+From 87c6d4688c57b82db2db50673c15d1664f22296a Mon Sep 17 00:00:00 2001
+From: Shan Pen <bricle031@gmail.com>
+Date: Sun, 9 Nov 2025 18:12:36 +0800
+Subject: [PATCH 4/4] add lcd conf
+
+---
+ arch/arm/configs/imx6ull_elf1s_defconfig | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/configs/imx6ull_elf1s_defconfig b/arch/arm/configs/imx6ull_elf1s_defconfig
+index 116138504..5c9719cd3 100644
+--- a/arch/arm/configs/imx6ull_elf1s_defconfig
++++ b/arch/arm/configs/imx6ull_elf1s_defconfig
+@@ -320,9 +320,14 @@ CONFIG_VIDEO_OV2680=m
+ CONFIG_VIDEO_OV5645=m
+ CONFIG_VIDEO_ADV7180=m
+ CONFIG_DRM=y
+-# CONFIG_DRM_PANEL_LVDS=y
++CONFIG_DRM_PANEL_LVDS=y
+ CONFIG_DRM_IMX=y
+ CONFIG_DRM_IMX_PARALLEL_DISPLAY=y
++
++# 这是panel simple 的依赖
++CONFIG_DRM_MXSFB=y
++CONFIG_DRM_IMX_LCDIF=y
++CONFIG_BACKLIGHT_CLASS_DEVICE=y
+ CONFIG_DRM_PANEL_SIMPLE=y
+ CONFIG_DRM_PANEL_SEIKO_43WVF1G=y
+ CONFIG_DRM_TI_TFP410=y
+-- 
+2.43.0
+

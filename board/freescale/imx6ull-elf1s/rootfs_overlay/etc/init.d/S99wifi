@@ -1,0 +1,33 @@
+#!/bin/sh
+#INIT INFO
+# Provides:          wifi
+# Required-Start:    $network
+# Default-Start:     2 3 4 5
+# Short-Description: Start WiFi connection
+### END INIT INFO
+
+echo "[wifi] Starting Wi-Fi connection..."
+
+IFACE=wlan0
+CONF=/root/wap.conf
+LOG=/var/log/wifi.log
+
+# Bring up interface
+ip link set $IFACE up
+
+# Run wpa_supplicant in background
+wpa_supplicant -B -i $IFACE -c $CONF -D nl80211 >> $LOG 2>&1
+
+# Wait for connection
+sleep 3
+
+# Get IP
+udhcpc -i $IFACE >> $LOG 2>&1
+
+# Print IP
+IP=$(ip -4 addr show $IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+if [ -n "$IP" ]; then
+    echo "[wifi] Connected, IP=$IP"
+else
+    echo "[wifi] Failed to obtain IP"
+fi

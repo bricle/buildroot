@@ -1,4 +1,4 @@
-From 893ecdc96a0fb4df11cdc5181684ce745d49678b Mon Sep 17 00:00:00 2001
+From 3bca7d6181accdce318b5a2aee7346bbbe2b39c2 Mon Sep 17 00:00:00 2001
 From: Shan Pen <bricle031@gmail.com>
 Date: Thu, 6 Nov 2025 23:43:52 +0800
 Subject: [PATCH] add file for imx6ull elf1s
@@ -15,10 +15,10 @@ Subject: [PATCH] add file for imx6ull elf1s
  board/freescale/mx6ullelf1s/imximage_emmc.cfg | 117 ++++
  board/freescale/mx6ullelf1s/mx6ullevk.c       | 138 ++++
  board/freescale/mx6ullelf1s/plugin.S          | 138 ++++
- configs/mx6ull_14x14_elf1s_defconfig          |  79 +++
- include/configs/mx6ullelf1s.h                 | 114 +++
+ configs/mx6ull_14x14_elf1s_defconfig          |  83 +++
+ include/configs/mx6ullelf1s.h                 | 115 ++++
  include/configs/mx6ullevk.h                   |   6 +-
- 14 files changed, 1408 insertions(+), 3 deletions(-)
+ 14 files changed, 1413 insertions(+), 3 deletions(-)
  create mode 100644 arch/arm/dts/imx6ull-14x14-elf1s-inc.dtsi
  create mode 100644 arch/arm/dts/imx6ull-14x14-elf1s.dts
  create mode 100644 board/freescale/mx6ullelf1s/Kconfig
@@ -1328,10 +1328,10 @@ index 00000000..1f631ff5
 +#include <asm/arch/mx6_plugin.S>
 diff --git a/configs/mx6ull_14x14_elf1s_defconfig b/configs/mx6ull_14x14_elf1s_defconfig
 new file mode 100644
-index 00000000..85ec6293
+index 00000000..b332faf5
 --- /dev/null
 +++ b/configs/mx6ull_14x14_elf1s_defconfig
-@@ -0,0 +1,79 @@
+@@ -0,0 +1,83 @@
 +CONFIG_ARM=y
 +CONFIG_ARCH_MX6=y
 +CONFIG_TEXT_BASE=0x87800000
@@ -1411,13 +1411,17 @@ index 00000000..85ec6293
 +CONFIG_CMD_RMII=y
 +CONFIG_CMD_MII=y
 +CONFIG_NET_RANDOM_ETHADDR=y
++
++CONFIG_VERSION_VARIABLE=y
++CONFIG_ENV_IS_IN_FAT=y
++CONFIG_BOOTDELAY=5
 \ No newline at end of file
 diff --git a/include/configs/mx6ullelf1s.h b/include/configs/mx6ullelf1s.h
 new file mode 100644
-index 00000000..3e3278c8
+index 00000000..c5b2dcef
 --- /dev/null
 +++ b/include/configs/mx6ullelf1s.h
-@@ -0,0 +1,114 @@
+@@ -0,0 +1,115 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * Copyright (C) 2016 Freescale Semiconductor, Inc.
@@ -1447,6 +1451,7 @@ index 00000000..3e3278c8
 +	"script=boot.scr\0" \
 +	"image=zImage\0" \
 +	"console=ttymxc0\0" \
++	"baudrate=115200\0"	\
 +	"fdt_high=0xffffffff\0" \
 +	"initrd_high=0xffffffff\0" \
 +	"fdt_file=imx6ull-14x14-elf1s.dtb\0" \
