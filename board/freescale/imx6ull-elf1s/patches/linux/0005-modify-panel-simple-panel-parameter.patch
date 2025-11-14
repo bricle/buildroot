@@ -1,0 +1,116 @@
+From 06ab74921697ca187ac55fb9735b47b1264e210a Mon Sep 17 00:00:00 2001
+From: Shan Pen <bricle031@gmail.com>
+Date: Tue, 11 Nov 2025 21:45:28 +0800
+Subject: [PATCH 5/5] modify panel-simple panel parameter
+
+---
+ .../boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi | 28 +++++++++++++------
+ drivers/gpu/drm/panel/panel-simple.c          | 24 ++++++++--------
+ 2 files changed, 33 insertions(+), 19 deletions(-)
+
+diff --git a/arch/arm/boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi b/arch/arm/boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi
+index 2fbca9c13..5319dacc7 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi
+@@ -107,6 +107,7 @@ gpio_spi: gpio@0 {
+ 			#gpio-cells = <2>;
+ 			reg = <0>;
+ 			registers-number = <1>;
++			// registers-default = /bits/ 8 <0xaf>;
+ 			spi-max-frequency = <100000>;
+ 			enable-gpios = <&gpio5 8 GPIO_ACTIVE_LOW>;
+ 		};
+@@ -295,6 +296,13 @@ eth1-phy-hog {
+ 		output-high;
+ 		line-name = "eth1-phy";
+ 	};
++
++	lcd-pwr-hog {
++		gpio-hog;
++		gpios = <7 GPIO_ACTIVE_HIGH>;
++		output-high;
++		line-name = "lcd-pwr";
++	};
+ };
+ 
+ &i2c1 {
+@@ -312,6 +320,10 @@ touchscreen@14 {
+ 		interrupts = <1 IRQ_TYPE_EDGE_FALLING>;
+ 		irq-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
+ 		reset-gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
++		AVDD28-supply = <&reg_peri_3v3>;
++		VDDIO-supply = <&reg_peri_3v3>;
++		touchscreen-size-x = <800>;
++		touchscreen-size-y = <480>;
+ 		status = "okay";
+ 	};
+ 
+@@ -571,14 +583,14 @@ MX6UL_PAD_LCD_DATA12__LCDIF_DATA12  0x79
+ 			MX6UL_PAD_LCD_DATA13__LCDIF_DATA13  0x79
+ 			MX6UL_PAD_LCD_DATA14__LCDIF_DATA14  0x79
+ 			MX6UL_PAD_LCD_DATA15__LCDIF_DATA15  0x79
+-			MX6UL_PAD_LCD_DATA16__LCDIF_DATA16  0x79
+-			MX6UL_PAD_LCD_DATA17__LCDIF_DATA17  0x79
+-			MX6UL_PAD_LCD_DATA18__LCDIF_DATA18  0x79
+-			MX6UL_PAD_LCD_DATA19__LCDIF_DATA19  0x79
+-			MX6UL_PAD_LCD_DATA20__LCDIF_DATA20  0x79
+-			MX6UL_PAD_LCD_DATA21__LCDIF_DATA21  0x79
+-			MX6UL_PAD_LCD_DATA22__LCDIF_DATA22  0x79
+-			MX6UL_PAD_LCD_DATA23__LCDIF_DATA23  0x79
++			// MX6UL_PAD_LCD_DATA16__LCDIF_DATA16  0x79
++			// MX6UL_PAD_LCD_DATA17__LCDIF_DATA17  0x79
++			// MX6UL_PAD_LCD_DATA18__LCDIF_DATA18  0x79
++			// MX6UL_PAD_LCD_DATA19__LCDIF_DATA19  0x79
++			// MX6UL_PAD_LCD_DATA20__LCDIF_DATA20  0x79
++			// MX6UL_PAD_LCD_DATA21__LCDIF_DATA21  0x79
++			// MX6UL_PAD_LCD_DATA22__LCDIF_DATA22  0x79
++			// MX6UL_PAD_LCD_DATA23__LCDIF_DATA23  0x79
+ 		>;
+ 	};
+ 
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 82db3daf4..fc1ed61ba 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2418,15 +2418,15 @@ static const struct panel_desc hitachi_tx23d38vm0caa = {
+ };
+ 
+ static const struct drm_display_mode innolux_at043tn24_mode = {
+-	.clock = 9000,
+-	.hdisplay = 480,
+-	.hsync_start = 480 + 2,
+-	.hsync_end = 480 + 2 + 41,
+-	.htotal = 480 + 2 + 41 + 2,
+-	.vdisplay = 272,
+-	.vsync_start = 272 + 2,
+-	.vsync_end = 272 + 2 + 10,
+-	.vtotal = 272 + 2 + 10 + 2,
++	.clock = 33000,
++	.hdisplay = 800,
++	.hsync_start = 800 + 121,
++	.hsync_end = 800 + 121 + 48,
++	.htotal = 800 + 121 + 48 + 88,
++	.vdisplay = 480,
++	.vsync_start = 480 + 21,
++	.vsync_end = 480 + 21 + 3,
++	.vtotal = 480 + 21 + 3 + 39,
+ 	.flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
+ };
+ 
+@@ -2438,9 +2438,11 @@ static const struct panel_desc innolux_at043tn24 = {
+ 		.width = 95,
+ 		.height = 54,
+ 	},
+-	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
++	.bus_format = MEDIA_BUS_FMT_RGB565_1X16,
++	// .bus_format = MEDIA_BUS_FMT_RGB565_1X16,
+ 	.connector_type = DRM_MODE_CONNECTOR_DPI,
+-	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_NEGEDGE,
++	// .bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
+ };
+ 
+ static const struct drm_display_mode innolux_at070tn92_mode = {
+-- 
+2.43.0
+

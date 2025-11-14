@@ -1,7 +1,7 @@
 From 1acf13b9ce9a7bd7965bea32c79f48b02e72c593 Mon Sep 17 00:00:00 2001
 From: Shan Pen <bricle031@gmail.com>
 Date: Sun, 9 Nov 2025 16:46:18 +0800
-Subject: [PATCH 3/4] update conf and dts
+Subject: [PATCH 3/5] update conf and dts
 
 ---
  .../boot/dts/nxp/imx/imx6ull-14x14-elf1s.dtsi | 243 ++++++++++++------

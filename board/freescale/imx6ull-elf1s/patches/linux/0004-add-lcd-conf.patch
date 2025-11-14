@@ -1,7 +1,7 @@
 From 87c6d4688c57b82db2db50673c15d1664f22296a Mon Sep 17 00:00:00 2001
 From: Shan Pen <bricle031@gmail.com>
 Date: Sun, 9 Nov 2025 18:12:36 +0800
-Subject: [PATCH 4/4] add lcd conf
+Subject: [PATCH 4/5] add lcd conf
 
 ---
  arch/arm/configs/imx6ull_elf1s_defconfig | 7 ++++++-

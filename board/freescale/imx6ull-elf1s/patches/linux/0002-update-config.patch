@@ -1,7 +1,7 @@
 From 339f80d5fa93979e4959b2a7dde275900eecce6e Mon Sep 17 00:00:00 2001
 From: Shan Pen <bricle031@gmail.com>
 Date: Sat, 8 Nov 2025 23:02:04 +0800
-Subject: [PATCH 2/4] update config
+Subject: [PATCH 2/5] update config
 
 ---
  arch/arm/configs/imx6ull_elf1s_defconfig | 8 +++++---
